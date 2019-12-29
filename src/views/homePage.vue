@@ -3,7 +3,6 @@
     <!-- 1.顶部栏 -->
     <Header />
     <div class="hbody">
-      <div class="list" />
       <!-- 2.轮播图 -->
       <section>
         <swiper
@@ -12,7 +11,7 @@
         >
           <swiper-slide>
             <img
-              src="../icons/ban1.png"
+              src="../icons/ban6.png"
               alt=""
             >
           </swiper-slide>
@@ -24,7 +23,7 @@
           </swiper-slide>
           <swiper-slide>
             <img
-              src="../icons/ban3.png"
+              src="../icons/ban5.jpg"
               alt=""
             >
           </swiper-slide>
@@ -168,9 +167,6 @@ export default {
     .hbody{
         width: 1220px;
         margin: 0 auto;
-    }
-    .list{
-        height: 90px;
     }
     .swiper{
         overflow: hidden;
