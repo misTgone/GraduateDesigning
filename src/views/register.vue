@@ -29,6 +29,10 @@
             >
           </li>
           <li>
+            <!-- 验证码 -->
+            <VerificationCode ref="VerificationCode" />
+          </li>
+          <li>
             <button
               class="btn btn-primary"
               @click="toRegister"
@@ -43,7 +47,11 @@
 </template>
 
 <script>
+import VerificationCode from '../components/verificationCode.vue'
 export default {
+  components: {
+    VerificationCode
+  },
   data () {
     return {
       userName: '',
@@ -58,39 +66,49 @@ export default {
       let rp = this.repetUpwd
       // 验证环节
       if (!u) {
-        alert('帐号不能为空!')
+        this.$message.error(
+          '账号不能为空!'
+        )
         return
       }
       if (!p) {
-        alert('密码不能为空!')
+        this.$message.error(
+          '密码不能为空!'
+        )
         return
       }
       if (!rp) {
-        alert('请再次确认密码!')
+        this.$message.error(
+          '请再次确认密码!'
+        )
         return
       }
       if (rp !== p) {
-        alert('前后密码不一致!')
+        this.$message.error(
+          '前后密码不一致!'
+        )
         return
       }
-      // 发送ajax  post 请求
-      let postData = this.qs.stringify({
-        user: u,
-        upwd: p
-      })
-      let url = 'http://127.0.0.1:3000/register'
-      this.axios.post(url, postData).then(result => {
-        // console.log(result)
-        if (result.data.code === 1) {
-          alert('注册成功!')
-          this.userName = ''
-          this.userPassword = ''
-          this.repetUpwd = ''
-          this.$router.push({ path: '/login' })
-        } else {
-          alert('该用户名已注册!')
-        }
-      })
+      let VCode = this.$refs.VerificationCode.check()
+      if (VCode === 1) {
+        // 发送ajax  post 请求
+        let postData = this.qs.stringify({
+          user: u,
+          upwd: p
+        })
+        let url = 'http://106.13.61.186:3000/register'
+        this.axios.post(url, postData).then(result => {
+          if (result.data.code === 1) {
+            alert('注册成功!')
+            this.userName = ''
+            this.userPassword = ''
+            this.repetUpwd = ''
+            this.$router.push({ path: '/login' })
+          } else {
+            alert('该用户名已注册!')
+          }
+        })
+      }
     }
 
   }
@@ -106,7 +124,7 @@ export default {
             text-align: center;
             margin: 0 auto;
             width: 450px;
-            height: 400px;
+            height: 460px;
             margin-top: 100px;
             border-radius: 10px;
             box-shadow: 0 9px 30px -6px rgba(0,0,0,.2), 0 18px 20px -10px rgba(0,0,0,.04), 0 18px 20px -10px rgba(0,0,0,.04), 0 10px 20px -10px rgba(0,0,0,.04);

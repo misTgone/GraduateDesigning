@@ -8,32 +8,58 @@
       <div>
         <div>
           <ul>
-            <li>图1</li>
-            <li>图2</li>
-            <li>图3</li>
-            <li>图4</li>
+            <li
+              v-for="(item,index) of goodsPic"
+              :key="index"
+              @click="say(index,item.url)"
+              :class="show(index)"
+            >
+              <img
+                :src="item.url"
+                alt=""
+              >
+            </li>
           </ul>
         </div>
-        <div>大图片</div>
+        <div>
+          <img
+            :src="picUrl"
+            alt=""
+          >
+        </div>
       </div>
       <!-- 右侧文字信息 -->
       <div>
         <div>
-          <h3>坚果 3 绒布国旗保护套</h3>
-          <span>质感精良、完美贴合、周到防护</span>
-          <span>￥79.00</span>
+          <h3>{{ goodsData.gname }}</h3>
+          <span>{{ goodsData.goodsMsg }}</span>
+          <span>￥{{ goodsData.gprice }}</span>
         </div>
         <div>
           <span>数量</span>
-          <button>-</button>
-          <span>1</span>
-          <button>+</button>
+          <i
+            @click="num>=1?num-=1:0"
+            class="el-icon-remove-outline"
+          />
+          <span>{{ num }}</span>
+          <i
+            @click="num+=1"
+            class="el-icon-circle-plus-outline"
+          />
         </div>
         <div>
-          <button class="btn btn-primary">
+          <el-button
+            :plain="true"
+            class="btn"
+            style="background:#4dc86f"
+            @click="addCart"
+          >
             加入购物车
-          </button>
-          <button class="btn btn-warning">
+          </el-button>
+          <button
+            class="btn btn-warning"
+            @click="buyNow()"
+          >
             现在购买
           </button>
         </div>
@@ -46,7 +72,7 @@
     >
       <div>
         <img
-          src="../../../server/public/icons/jianguo3_detail.jpg"
+          :src="goodsData.goodsDetail"
           alt=""
         >
       </div>
@@ -62,13 +88,75 @@ import Cart from '../components/card.vue'
 export default {
   data () {
     return {
-
+      goodsid: this.$route.params.goodsid,
+      goodsData: [],
+      goodsPic: [],
+      picNum: 0,
+      picUrl: String,
+      num: 1
     }
   },
   components: {
     Heador,
     Footor,
     Cart
+  },
+  created () {
+    let url = `http://106.13.61.186:3000/goodsDetails/${this.goodsid}`
+    this.axios.get(url).then(result => {
+      this.goodsData = result.data.arr[0]
+      this.goodsPic = result.data.arr_pic
+      // 默认读取小图片中的第一张图片
+      this.picUrl = result.data.arr_pic[0].url
+    })
+  },
+  methods: {
+    // say和show配合，使得左边小图有灰色边框效果
+    say (index, url) {
+      this.picNum = index
+      this.picUrl = url
+    },
+    show (index) {
+      if (index === this.picNum) {
+        return 'picBorder'
+      }
+    },
+    // 加入购物车表
+    addCart () {
+      let userId = sessionStorage.getItem('userId')
+      if (!userId) {
+        this.$router.push('/login')
+      } else {
+        let cid = userId
+        let gid = this.goodsid
+        let num = this.num
+        let url = `http://106.13.61.186:3000/addCart`
+        let postData = this.qs.stringify({
+          cid,
+          gid,
+          num
+        })
+        this.axios.post(url, postData).then(result => {
+          this.$message({
+            message: '添加成功!',
+            type: 'success'
+          })
+        })
+      }
+    },
+    // 单品信息写入vuex，并跳转到checkout结算页面
+    buyNow () {
+      let product = []
+      let p = {}
+      p.goodsid = this.goodsid
+      p.gprice = this.goodsData.gprice
+      p.gname = this.goodsData.gname
+      p.num = this.num
+      p.url = this.picUrl
+      product.push(p)
+      this.$store.state.checkoutSingle = product
+      this.$router.push('/checkout')
+    }
   }
 }
 </script>
@@ -103,6 +191,16 @@ export default {
                         height: 80px;
                         border: 1px solid #f0f0f0;
                         margin-bottom: 10px;
+                        >img{
+                          width: 60px;
+                          height: 60px;
+                          cursor: pointer;
+                          position: relative;
+                          top: 50%;
+                          left: 50%;
+                          margin-top: -30px;
+                          margin-left: -30px;
+                        }
                     }
                 }
             }
@@ -110,6 +208,11 @@ export default {
                 width: 460px;
                 height: 440px;
                 margin-left: 20px;
+                >img{
+                  width: 460px;
+                  height: 440px;
+                  margin-left: -20px;
+                }
             }
         }
         >div:last-child{
@@ -137,14 +240,14 @@ export default {
               margin: 25px 0;
               padding-bottom: 25px;
               border-bottom: 1px solid #ebebeb;
+              user-select:none;
               >span:first-child{
                 font-size: 14px;
                 color: #8d8d8d;
                 margin-right: 20px;
               }
-              >button{
-                width: 24px;
-                height: 27px;
+              >i{
+                cursor: pointer;
               }
               >span:nth-child(3){
                 width: 30px;
@@ -159,5 +262,9 @@ export default {
               }
             }
         }
+    }
+    .picBorder{
+      border:3px solid rgba(0,0,0,0.2) !important;
+      border-radius: 4px;
     }
 </style>

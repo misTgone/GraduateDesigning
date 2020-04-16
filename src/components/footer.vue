@@ -67,6 +67,7 @@ export default {
         background-color: white;
         margin-top: 30px;
         overflow: hidden;
+        min-width: 1220px;
     }
     #tabbar>div{
         width: 1220px;

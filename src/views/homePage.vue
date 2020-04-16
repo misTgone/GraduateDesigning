@@ -11,25 +11,25 @@
         >
           <swiper-slide>
             <img
-              src="../icons/ban6.png"
+              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/ban6.png"
               alt=""
             >
           </swiper-slide>
           <swiper-slide>
             <img
-              src="../icons/ban2.png"
+              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/ban2.png"
               alt=""
             >
           </swiper-slide>
           <swiper-slide>
             <img
-              src="../icons/ban5.jpg"
+              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/ban5.jpg"
               alt=""
             >
           </swiper-slide>
           <swiper-slide>
             <img
-              src="../icons/banner4.png"
+              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/banner4.png"
               alt=""
             >
           </swiper-slide>
@@ -53,7 +53,7 @@
           <li>
             <router-link to="">
               <img
-                src="../icons/four1.jpg"
+                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four1.jpg"
                 alt=""
               >
             </router-link>
@@ -61,7 +61,7 @@
           <li>
             <router-link to="">
               <img
-                src="../icons/four2.jpg"
+                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four2.jpg"
                 alt=""
               >
             </router-link>
@@ -69,7 +69,7 @@
           <li>
             <router-link to="">
               <img
-                src="../icons/four3.png"
+                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four3.png"
                 alt=""
               >
             </router-link>
@@ -77,7 +77,7 @@
           <li>
             <router-link to="">
               <img
-                src="../icons/four4.jpg"
+                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four4.jpg"
                 alt=""
               >
             </router-link>
@@ -91,7 +91,7 @@
           <div>
             <div>
               <img
-                src="../icons/hot2.webp"
+                src="http://q7jie7kms.bkt.clouddn.com/img/hot/hot2.webp"
                 alt=""
                 class="hot1"
               >
@@ -102,7 +102,7 @@
           <div>
             <div>
               <img
-                src="../icons/hot1.jpg"
+                src="http://q7jie7kms.bkt.clouddn.com/img/hot/hot1.jpg"
                 alt=""
               >
             </div>
@@ -116,10 +116,10 @@
       <!-- 6.four小图 -->
       <div id="miniFour">
         <ul>
-          <li><img src="../icons/mini1.jpg"></li>
-          <li><img src="../icons/mini2.jpg"></li>
-          <li><img src="../icons/mini3.jpg"></li>
-          <li><img src="../icons/mini4.jpg"></li>
+          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini1.jpg"></li>
+          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini2.jpg"></li>
+          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini3.jpg"></li>
+          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini4.jpg"></li>
         </ul>
       </div>
     </div>
@@ -159,124 +159,137 @@ export default {
   }
 }
 </script>
-<style>
-    *{
-        padding: 0;
-        margin: 0;
+<style lang='scss'>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  .home{
+    min-width: 1220px;
+  }
+  .hbody{
+    width: 1220px;
+    margin: 0 auto;
+  }
+  .swiper{
+    overflow: hidden;
+  }
+  .swiper-button-next{
+    margin-left: 100%;
+  }
+  .swiper img{
+    width: 1220px;
+    height: 500px;
+    border-radius: 10px;
+  }
+  .swiper-pagination{
+    width: 100px;
+    background-color: rgba(255, 255, 255, 0);
+  }
+  .swiper-button-prev,.swiper-button-next{
+    background-color: rgba(255, 255, 255, 0);
+  }
+  .fourLi>ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 25px;
+    box-sizing: border-box;
+  }
+  .fourLi>ul>li{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 25%;
+    height: 200px;
+    background-color: white;
+    border-right: 1px solid rgba(0, 0, 0,.1);
+  }
+  .fourLi>ul>li img{
+    width: 304px;
+    height: 200px;
+  }
+  .hotGoods{
+    margin-top: 30px;
+  }
+  .hotGoods>div:first-child{
+    border-radius: 8px 8px 0 0;
+    height: 60px;
+    padding-left: 30px;
+    line-height: 60px;
+    font-size: 18px;
+    color: #626262;
+    font-weight: 400;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
+    background: linear-gradient(#fbfbfb,#ededed);
+  }
+  .hotGoods>div:last-child>div{
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    background-color: white;
+    height: 430px;
+    vertical-align: top;
+    &:hover{
+      box-shadow: 0 0 25px #c2c2c2;
+      transition: all .5s;
+      z-index: 4;
+      cursor: pointer;
     }
-    .hbody{
-        width: 1220px;
-        margin: 0 auto;
+  }
+  .hotGoods>div:last-child>div>div{
+    background-color: white;
+    width: 206px;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
+  .hotGoods>div:last-child>div:first-child{
+    border-bottom-left-radius: 10px;
+  }
+  .hotGoods>div:last-child>div:last-child{
+    border-bottom-right-radius: 10px;
+  }
+  .hotGoods>div:last-child>div img{
+    width: 206px;
+    height: 206px;
+  }
+  .hotGoods>div:last-child div+h6{
+    background-color: white;
+    margin: 0 auto;
+    width: 284px;
+    white-space: nowrap;
+    margin-top: 20px;
+  }
+  .hotGoods>div:last-child>div>h6:nth-child(3){
+    color: #d44d44;
+    font-size: 18px;
+    background-color: white;
+    margin: 0 auto;
+    width: 84px;
+    margin-top: 10px;
+  }
+  .hotGoods>div:last-child>div:last-child>div+h6{
+    width: 226px;
+  }
+  #miniFour{
+    margin-top: 30px;
+  }
+  #miniFour>ul{
+    display: flex;
+    list-style: none;
+    >li{
+      cursor: pointer;
     }
-    .swiper{
-        overflow: hidden;
-    }
-    .swiper-button-next{
-        margin-left: 100%;
-    }
-    .swiper img{
-        width: 1220px;
-        height: 500px;
-        border-radius: 10px;
-    }
-    .swiper-pagination{
-        width: 100px;
-        background-color: rgba(255, 255, 255, 0);
-    }
-    .swiper-button-prev,.swiper-button-next{
-        background-color: rgba(255, 255, 255, 0);
-    }
-    .fourLi>ul{
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        margin-top: 25px;
-        box-sizing: border-box;
-    }
-    .fourLi>ul>li{
-        display: inline-block;
-        box-sizing: border-box;
-        width: 25%;
-        height: 200px;
-        background-color: white;
-        border-right: 1px solid rgba(0, 0, 0,.1);
-    }
-    .fourLi>ul>li img{
-        width: 304px;
-        height: 200px;
-    }
-    .hotGoods{
-        margin-top: 30px;
-    }
-    .hotGoods>div:first-child{
-        border-radius: 8px 8px 0 0;
-        height: 60px;
-        padding-left: 30px;
-        line-height: 60px;
-        font-size: 18px;
-        color: #626262;
-        font-weight: 400;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
-        background: linear-gradient(#fbfbfb,#ededed);
-    }
-    .hotGoods>div:last-child>div{
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-        width: 50%;
-        background-color: white;
-        height: 430px;
-        vertical-align: top;
-    }
-    .hotGoods>div:last-child>div>div{
-        background-color: white;
-        width: 206px;
-        margin: 0 auto;
-        margin-top: 50px;
-    }
-    .hotGoods>div:last-child>div:first-child{
-        border-bottom-left-radius: 10px;
-    }
-    .hotGoods>div:last-child>div:last-child{
-        border-bottom-right-radius: 10px;
-    }
-    .hotGoods>div:last-child>div img{
-        width: 206px;
-        height: 206px;
-    }
-    .hotGoods>div:last-child div+h6{
-        background-color: white;
-        margin: 0 auto;
-        width: 284px;
-        white-space: nowrap;
-        margin-top: 20px;
-    }
-    .hotGoods>div:last-child>div>h6:nth-child(3){
-        color: #d44d44;
-        font-size: 18px;
-        background-color: white;
-        margin: 0 auto;
-        width: 84px;
-        margin-top: 10px;
-    }
-    .hotGoods>div:last-child>div:last-child>div+h6{
-        width: 226px;
-    }
-    #miniFour{
-        margin-top: 30px;
-    }
-    #miniFour>ul{
-        display: flex;
-        list-style: none;
-    }
-    #miniFour>ul>li:first-child>img{
-        border-radius: 10px 0 0 10px;
-    }
-    #miniFour>ul>li:last-child>img{
-        border-radius: 0 10px 10px 0;
-    }
-    #miniFour>ul>li>img{
-        width: 304.5px;
-        height: 200px;
-    }
+  }
+  #miniFour>ul>li:first-child>img{
+    border-radius: 10px 0 0 10px;
+  }
+  #miniFour>ul>li:last-child>img{
+    border-radius: 0 10px 10px 0;
+  }
+  #miniFour>ul>li>img{
+    width: 304.5px;
+    height: 200px;
+  }
 </style>

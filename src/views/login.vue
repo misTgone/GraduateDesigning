@@ -24,6 +24,8 @@
             >
           </label>
         </div>
+        <!-- 验证码 -->
+        <VerificationCode ref="VerificationCode" />
         <div>
           <router-link to="/register">
             注册帐号 |
@@ -35,7 +37,7 @@
         <div>
           <button
             class="btn btn-primary"
-            @click="toLogin"
+            @click="loginCheck()"
           >
             登录
           </button>
@@ -46,7 +48,11 @@
 </template>
 
 <script>
+import VerificationCode from '../components/verificationCode.vue'
 export default {
+  components: {
+    VerificationCode
+  },
   data () {
     return {
       userName: '',
@@ -54,40 +60,54 @@ export default {
     }
   },
   methods: {
-    toLogin () {
+    loginCheck () {
       let u = this.userName
       let p = this.userPassword
       // 检验是否输入为空
       if (!u) {
-        alert('请输入用户名!')
+        this.$message.error(
+          '请输入用户名!'
+        )
         return
       }
       if (!p) {
-        alert('请输入密码!')
+        this.$message.error(
+          '请输入密码!'
+        )
         return
       }
-      // 发送axios post 请求
-      let postData = this.qs.stringify({
-        user: u,
-        upwd: p
-      })
-      let url = 'http://127.0.0.1:3000/login'
-      this.axios.post(url, postData).then(result => {
-        if (result.data.code === 1) {
-          alert('登录成功!')
-          this.userName = ''
-          this.userPassword = ''
-          // vuex并不能满足系统登录的需求
-          // console.log(result.data.uid)
-          // console.log(this.$store.state.userLogin)
-          // this.$store.state.userLogin = result.data.uid
-          // 使用sessionstorage解决
-          sessionStorage.setItem('userId', result.data.uid)
-          this.$router.push({ path: '/' })
-        } else {
-          alert('账号或者密码有误!')
-        }
-      })
+      let VCode = this.$refs.VerificationCode.check()
+      if (VCode === 1) {
+        // 发送axios post 请求
+        let postData = this.qs.stringify({
+          user: u,
+          upwd: p
+        })
+        let url = 'http://106.13.61.186:3000/login'
+        this.axios.post(url, postData).then(result => {
+          if (result.data.code === 1) {
+            this.$message({
+              message: '登录成功!',
+              type: 'success'
+            })
+            this.userName = ''
+            this.userPassword = ''
+            // vuex并不能满足系统登录的需求
+            // console.log(result.data.uid)
+            // console.log(this.$store.state.userLogin)
+            // this.$store.state.userLogin = result.data.uid
+            // 使用sessionstorage解决
+            sessionStorage.setItem('userId', result.data.uid)
+            // 用以在header.vue中显示用户名
+            sessionStorage.setItem('userName', result.data.uname)
+            this.$router.push({ path: '/' })
+          } else {
+            this.$message.error(
+              '账号或者密码有误!'
+            )
+          }
+        })
+      }
     }
   }
 }

@@ -14,23 +14,26 @@
             placeholder="搜索"
           >
         </label>
-        <a
-          href="javascript:;"
+        <router-link
+          to="/goods"
           class="rcolor"
-        >全部商品</a>
+          style="margin-left:12px;"
+        >
+          全部商品
+        </router-link>
         <a
           href="javascript:;"
           class="rcolor"
         >捐赠</a>
-        <router-link
-          to="/login"
+        <span
+          @click="toLogin"
         >
           <i
             class="fas fa-user fa-lg bgcolor rcolor"
             @mouseover="userWrapper"
             @mouseleave="userAWrapper"
           />
-        </router-link>
+        </span>
         <!-- 用户内容提示框 -->
         <div
           class="nav-user-wrapper"
@@ -44,31 +47,35 @@
             <ul>
               <li>
                 <router-link to="">
-                  图片加用户名
+                  <img
+                    src="http://q7jie7kms.bkt.clouddn.com/img/headPortrait/v2-8df0e1ada7af09d3c62f2ba5ec4e4266_hd.jpg"
+                    alt=""
+                  >
+                  <p>{{ userName }}</p>
                 </router-link>
               </li>
               <li>
-                <router-link to="">
+                <router-link to="/user/orderList">
                   我的订单
                 </router-link>
               </li>
               <li>
-                <router-link to="">
+                <router-link to="/user/information">
                   账户资料
                 </router-link>
               </li>
               <li>
-                <router-link to="">
+                <router-link to="/user/addressList">
                   收货地址
                 </router-link>
               </li>
               <li>
-                <router-link to="">
+                <router-link to="/user/support">
                   售后服务
                 </router-link>
               </li>
               <li>
-                <router-link to="">
+                <router-link to="/user/coupon">
                   我的优惠
                 </router-link>
               </li>
@@ -80,16 +87,51 @@
             </ul>
           </div>
         </div>
-        <router-link
-          to="/cart"
+        <span
+          @click="toCart"
         >
           <i class="fas fa-shopping-cart fa-lg bgcolor rcolor" />
-        </router-link>
+        </span>
       </div>
     </header>
-    <div class="nav-sub">
+    <div
+      class="nav-sub"
+      v-show="toShow"
+    >
       <div>
-        123
+        <ul>
+          <li>
+            <router-link to="/">
+              · 首页
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/goods">
+              · 全部
+            </router-link>
+          </li>
+          <li>
+            <router-link to="">
+              · 后台管理系统
+            </router-link>
+          </li>
+          <li>
+            <a
+              href="https://github.com/misTgone"
+              target="_blank"
+            >
+              · Github
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://weibo.com/5666508219/profile?rightmod=1&wvr=6&mod=personinfo"
+              target="_blank"
+            >
+              · 个人微博
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -99,6 +141,13 @@
 export default {
   data () {
     return {
+      userName: sessionStorage.getItem('userName')
+    }
+  },
+  props: {
+    'toShow': {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -118,7 +167,26 @@ export default {
     },
     userExit () {
       sessionStorage.removeItem('userId')
-      location.reload()
+      let path = this.$route.path
+      if (path === '/') {
+        location.reload()
+      } else {
+        this.$router.push('/')
+      }
+    },
+    toLogin () {
+      if (!sessionStorage.getItem('userId')) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/user/orderList')
+      }
+    },
+    toCart () {
+      if (!sessionStorage.getItem('userId')) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/cart')
+      }
     }
   }
 }
@@ -167,11 +235,14 @@ export default {
   .rcolor:hover{
     color: #e2e2e2;
   }
-  .hContent>a:nth-child(5){
+  .hContent>span:nth-child(5){
       margin-left: 50px;
   }
-  .hContent>i:nth-child(6){
-      margin-left: 50px;
+  .hContent>span:nth-child(7){
+      margin-left: 40px;
+  }
+  .hContent>span:hover{
+    cursor: pointer;
   }
   .nav-user-wrapper{
     position: absolute;
@@ -217,6 +288,17 @@ export default {
             height: 90px;
             line-height: 90px;
             margin-top: 10px;
+            img{
+              width: 60px;
+              border-radius: 50%;
+              margin-left: -17px;
+              margin-top: -30px;
+            }
+            p{
+              position: relative;
+              top: -35px;
+              font-size: 14px;
+            }
         }
         >li:last-child{
           border-bottom: 0;
@@ -236,6 +318,22 @@ export default {
     >div{
       width: 1220px;
       margin: 0 auto;
+      >ul{
+        list-style: none;
+        overflow: hidden;
+        >li{
+          float: left;
+          line-height: 90px;
+          margin-right: 10px;
+          >a{
+            color: #666666;
+            &:hover{
+              text-decoration: none;
+              color: rgb(88, 132, 236);
+            }
+          }
+        }
+      }
     }
   }
 </style>

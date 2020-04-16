@@ -1,170 +1,135 @@
 <template>
-  <header class="bgcolor">
-    <div class="hContent bgcolor">
-      <i class="fas fa-cog fa-spin fa-3x bgcolor logo" />
-      <label class="bgcolor search">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="搜索"
-        >
-      </label>
-      <a
-        href="javascript:;"
-        class="rcolor"
-      >全部商品</a>
-      <a
-        href="javascript:;"
-        class="rcolor"
-      >捐赠</a>
-      <router-link
-        to="/login"
-      >
-        <i
-          class="fas fa-user fa-lg bgcolor rcolor"
-          @mouseover="userWrapper"
-          @mouseleave="userAWrapper"
-        />
-      </router-link>
-      <div
-        class="nav-user-wrapper"
-        @mousemove="userWrapper"
-      >
+  <div id="total">
+    <div>
+      <div class="title">
+        <div><i class="fas fa-cog fa-spin fa-4x bgcolor logo" /></div>
+        <h4>使用已注册帐号登录</h4>
         <div>
-          <div />
+          <label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="帐号"
+              v-model="userName"
+            >
+          </label>
         </div>
         <div>
-          <ul>
-            <li>图片加用户名</li>
-            <li>我的订单</li>
-            <li>账户资料</li>
-            <li>收货地址</li>
-            <li>售后服务</li>
-            <li>我的优惠</li>
-            <li>退出</li>
-          </ul>
+          <label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="密码"
+              v-model="userPassword"
+            >
+          </label>
+        </div>
+        <div>
+          <router-link to="/register">
+            注册帐号 |
+          </router-link>
+          <router-link to="">
+            忘记密码?
+          </router-link>
+        </div>
+        <div>
+          <button
+            class="btn btn-primary"
+            @click="toLogin"
+          >
+            登录
+          </button>
         </div>
       </div>
-      <router-link
-        to="/cart"
-      >
-        <i class="fas fa-shopping-cart fa-lg bgcolor rcolor" />
-      </router-link>
     </div>
-  </header>
+  </div>
 </template>
 
 <script>
 export default {
   data () {
     return {
-
+      userName: '',
+      userPassword: ''
     }
   },
   methods: {
-    userWrapper () {
-      let a = document.getElementsByClassName('nav-user-wrapper')[0]
-      a.style.display = 'block'
-    },
-    userAWrapper () {
-      let a = document.getElementsByClassName('nav-user-wrapper')[0]
-      a.style.display = 'none'
+    toLogin () {
+      let u = this.userName
+      let p = this.userPassword
+      // 检验是否输入为空
+      if (!u) {
+        alert('请输入用户名!')
+        return
+      }
+      if (!p) {
+        alert('请输入密码!')
+        return
+      }
+      // 发送axios post 请求
+      let postData = this.qs.stringify({
+        user: u,
+        upwd: p
+      })
+      let url = 'http://106.13.61.186:3000/login'
+      this.axios.post(url, postData).then(result => {
+        if (result.data.code === 1) {
+          alert('登录成功!')
+          this.userName = ''
+          this.userPassword = ''
+          // vuex并不能满足系统登录的需求
+          // console.log(result.data.uid)
+          // console.log(this.$store.state.userLogin)
+          // this.$store.state.userLogin = result.data.uid
+          // 使用sessionstorage解决
+          sessionStorage.setItem('userId', result.data.uid)
+          this.$router.push({ path: '/' })
+        } else {
+          alert('账号或者密码有误!')
+        }
+      })
     }
-
   }
 }
 </script>
 
-<style>
-    .home{
-       background-color: rgb(237, 237, 237);
-    }
-    header{
-        height: 100px;
-        width: 100%;
-        line-height: 100px;
-    }
-    .hContent{
-        width: 1220px;
-        margin: 0 auto;
-        height: 100px;
-        position: relative;
-    }
-    .bgcolor{
-        background-color: rgb(4, 4, 4);
-    }
-    .logo{
-        color: white;
-        position: relative;
-        top: 10px;
-    }
-    .search{
-        width: 300px;
-        margin-left: 300px;
-        margin-right: 250px;
-    }
-    .hContent a{
-        font-size: 14px;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-    .hContent a:hover{
-        text-decoration: none;
-        color: white;
-    }
-    .rcolor{
-        color: #c8c8c8;
-    }
-    .rcolor:hover{
-      color: #e2e2e2;
-    }
-    .hContent>i:nth-child(5){
-        margin-left: 50px;
-    }
-    .hContent>i:nth-child(6){
-        margin-left: 50px;
-    }
-    .nav-user-wrapper{
-      position: absolute;
-      top: 75px;
-      right: 12px;
-      width: 168px;
-      height: 374px;
-      background-color: white;
-      border-radius: 10px;
-      z-index: 30;
-      box-shadow: 0 0 20px 10px rgba(0,0,0,.04);
-      display: none;
-      border-top: 30px;
-    }
-    .nav-user-wrapper>div:first-child>div{
-      width: 19px;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 8px solid white;
-      border-radius: 6px;
-      position: relative;
-      top: -7px;
-      left: 75px;
-    }
-    .nav-user-wrapper>div:last-child>ul{
-      list-style: none;
-    }
-    .nav-user-wrapper>div:last-child>ul>li{
-      height: 46px;
-      width: 166px;
-      line-height: 44px;
-      text-align: center;
-      border-bottom: 1px solid #f5f5f5;
-      font-size: 12px;
-      color: #626262;
-    }
-    .nav-user-wrapper>div:last-child>ul>li:first-child{
-      height: 90px;
-      line-height: 90px;
-    }
-    .nav-user-wrapper>div:last-child>ul>li:last-child{
-      border-bottom: 0;
+<style lang="scss">
+    #total {
+        min-width: 630px;
+        min-height: 800px;
+        > div{
+            width: 452px;
+            height: 573px;
+            margin: 100px auto;
+            border-radius: 10px;
+            box-shadow: 0 9px 30px -6px rgba(0,0,0,.2), 0 18px 20px -10px rgba(0,0,0,.04), 0 18px 20px -10px rgba(0,0,0,.04), 0 10px 20px -10px rgba(0,0,0,.04);
+        }
+        .title{
+            > div{
+                text-align: center;
+                i{
+                    margin-top: 50px;
+                    color: rgb(4, 4, 4);
+                    background-color: rgba(255, 255, 255, 0);
+                }
+                > label{
+                    input{
+                        width: 370px;
+                        height: 50px;
+                        margin-top: 10px;
+                    }
+                }
+                > button{
+                    margin-top: 10px;
+                    width: 370px;
+                    height: 50px;
+                }
+            }
+            h4{
+                margin-top: 50px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+        }
     }
 </style>
