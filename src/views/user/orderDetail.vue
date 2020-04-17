@@ -143,7 +143,7 @@ export default {
       this.orderShow = 0
     } else {
       this.orderState = '待支付'
-      this.orderPhrase = '您的付款时间还有 15 小时 12 分 40 秒 ，超时后订单将自动取消。'
+      this.orderPhrase = '请及时付款，超时后订单将自动取消。'
     }
     let checkoutId = this.orderMsg[0].checkoutId
     let url = `http://106.13.61.186:3000/getCheckoutAddress/${checkoutId}`

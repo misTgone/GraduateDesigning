@@ -7,28 +7,35 @@
       <!-- 商品筛选 -->
       <div class="screen">
         <div>
-          <router-link to="">
+          <a @click="multipleRank()">
             综合排序
-          </router-link>
-          <router-link to="">
+          </a>
+          <a
+            @click="priceRank(1)"
+          >
             价格从低到高
-          </router-link>
-          <router-link to="">
+          </a>
+          <a @click="priceRank(0)">
             价格从高到低
-          </router-link>
+          </a>
           <div>
             <input
               type="text"
               placeholder="价格"
               class="form-control"
+              v-model="minPrice"
             >
             <span>-</span>
             <input
               type="text"
               placeholder="价格"
               class="form-control"
+              v-model="maxPrice"
             >
-            <button class="btn btn-primary">
+            <button
+              class="btn btn-primary"
+              @click="pricePart()"
+            >
               确定
             </button>
           </div>
@@ -80,7 +87,7 @@
       <div class="goods_paging">
         <div class="block">
           <el-pagination
-            :current-page="goodsPage"
+            :current-page.sync="goodsPage"
             :page-size="goodsPageSize"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -106,7 +113,9 @@ export default {
       goodsNum: 0,
       goodsForEach: [],
       goodsPage: 1,
-      goodsPageSize: 8
+      goodsPageSize: 8,
+      minPrice: '',
+      maxPrice: ''
     }
   },
   components: {
@@ -114,30 +123,12 @@ export default {
     Footor
   },
   mounted () {
-    let url = `http://106.13.61.186:3000/goods`
-    this.axios.get(url).then(result => {
-      if (result.data.code === 1) {
-        for (let i = 0, len = result.data.arr.length; i < len; i++) {
-          result.data.arr[i].url = result.data.arr_pic[i].url
-        }
-        this.goodsData = result.data.arr
-        this.goodsNum = result.data.arr.length
-        for (let i = 0; i < 8; i++) {
-          if (i < this.goodsData.length) {
-            this.goodsForEach.push(this.goodsData[i])
-          }
-        }
-      } else {
-        this.$router.push('/notFoundServer')
+    this.goodsData = JSON.parse(sessionStorage.getItem('goodsData'))
+    this.goodsNum = this.goodsData.length
+    for (let i = 0; i < 8; i++) {
+      if (i < this.goodsData.length) {
+        this.goodsForEach.push(this.goodsData[i])
       }
-    })
-  },
-  watch: {
-    goodsPage () {
-      let url = `http://106.13.61.186:3000/goods`
-      this.axios.get(url).then(result => {
-
-      })
     }
   },
   methods: {
@@ -178,6 +169,69 @@ export default {
           })
         }
       })
+    },
+    // 综合排序
+    multipleRank () {
+      this.minPrice = ''
+      this.maxPrice = ''
+      this.goodsData = JSON.parse(sessionStorage.getItem('goodsData'))
+      this.goodsForEach = []
+      this.goodsNum = this.goodsData.length
+      for (let i = 0; i < this.goodsPageSize; i++) {
+        if (i < this.goodsData.length) {
+          this.goodsForEach.push(this.goodsData[i])
+        }
+      }
+    },
+    // 价格高低排列(由参数决定)
+    // 调用数组sort()方法
+    priceRank (val) {
+      this.goodsPage = 1
+      if (val === 1) {
+        this.goodsData = this.goodsData.sort((a, b) => {
+          return a.gprice - b.gprice
+        })
+      } else {
+        this.goodsData = this.goodsData.sort((a, b) => {
+          return b.gprice - a.gprice
+        })
+      }
+      this.goodsForEach = []
+      for (let i = 0; i < this.goodsPageSize; i++) {
+        if (i < this.goodsData.length) {
+          this.goodsForEach.push(this.goodsData[i])
+        }
+      }
+    },
+    // 价格区间排列
+    pricePart () {
+      this.goodsData = JSON.parse(sessionStorage.getItem('goodsData'))
+      if (this.minPrice === '' && this.maxPrice === '') {
+        return
+      }
+      if (parseFloat(this.maxPrice) < parseFloat(this.minPrice)) {
+        this.minPrice = ''
+        this.maxPrice = ''
+        return
+      }
+      var minPrice = 0; var maxPrice = 999999
+      if (this.minPrice === '') {
+        maxPrice = parseFloat(this.maxPrice)
+      } else if (this.maxPrice === '') {
+        minPrice = parseFloat(this.minPrice)
+      }
+      maxPrice = parseFloat(this.maxPrice)
+      minPrice = parseFloat(this.minPrice)
+      this.goodsData = this.goodsData.filter(element => {
+        return element.gprice >= minPrice && element.gprice <= maxPrice
+      })
+      this.goodsForEach = []
+      this.goodsNum = this.goodsData.length
+      for (let i = 0; i < this.goodsPageSize; i++) {
+        if (i < this.goodsData.length) {
+          this.goodsForEach.push(this.goodsData[i])
+        }
+      }
     }
   }
 }
@@ -200,6 +254,7 @@ export default {
           >a{
             color: #999999;
             padding: 0 15px;
+            cursor: pointer;
           }
           >a:hover{
             color: #5884ea;

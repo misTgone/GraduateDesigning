@@ -156,6 +156,21 @@ export default {
   components: {
     Header,
     Feetor
+  },
+  mounted () {
+    // 获取表goods中的信息，通过sessionStorage传递给搜索栏(vuex不行，刷新就没)
+    // sessionStorage传递对象时，需要JSON.stringify()转换
+    let url = `http://106.13.61.186:3000/goods`
+    this.axios.get(url).then(result => {
+      if (result.data.code === 1) {
+        for (let i = 0, len = result.data.arr.length; i < len; i++) {
+          result.data.arr[i].url = result.data.arr_pic[i].url
+        }
+        sessionStorage.setItem('goodsData', JSON.stringify(result.data.arr))
+      } else {
+        this.$router.push('/notFoundServer')
+      }
+    })
   }
 }
 </script>
