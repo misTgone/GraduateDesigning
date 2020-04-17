@@ -8,11 +8,19 @@
           />
         </router-link>
         <label class="bgcolor search">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="搜索"
+          <!-- 搜索栏 -->
+          <el-autocomplete
+            v-model="state"
+            :fetch-suggestions="querySearchAsync"
+            placeholder="请输入内容"
+            @select="handleSelect"
           >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="toSearch()"
+            />
+          </el-autocomplete>
         </label>
         <router-link
           to="/goods"
@@ -141,7 +149,11 @@
 export default {
   data () {
     return {
-      userName: sessionStorage.getItem('userName')
+      userName: sessionStorage.getItem('userName'),
+      goods: [],
+      state: '',
+      timeout: null,
+      goodsid: ''
     }
   },
   props: {
@@ -187,6 +199,45 @@ export default {
       } else {
         this.$router.push('/cart')
       }
+    },
+    toSearch () {
+      if (!this.state) {
+        this.$notify({
+          title: '友情提示',
+          message: '请输入内容',
+          type: 'warning'
+        })
+      } else {
+        this.$router.push('/goodsDetails/' + this.goodsid)
+        location.reload()
+      }
+    },
+    querySearchAsync (queryString, cb) {
+      var goods = this.goods
+      // console.log(cb)
+      var results = queryString ? goods.filter(this.createStateFilter(queryString)) : goods
+
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        cb(results)
+      }, 400 * Math.random())
+    },
+    createStateFilter (queryString) {
+      return (state) => {
+        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    handleSelect (item) {
+      // console.log(item)
+      this.goodsid = item.goodsid
+    }
+  },
+  mounted () {
+    let goods = JSON.parse(sessionStorage.getItem('goodsData'))
+    if (goods) {
+      goods.forEach(element => {
+        this.goods.push({ 'value': element.gname, 'goodsid': element.goodsid })
+      })
     }
   }
 }
