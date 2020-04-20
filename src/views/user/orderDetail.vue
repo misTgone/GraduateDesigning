@@ -71,10 +71,12 @@
             :key="index"
             class="msg"
           >
-            <span><img
-              :src="item.chpic"
-              alt=""
-            ></span>
+            <span>
+              <img
+                :src="item.chpic"
+                alt
+              >
+            </span>
             <span>{{ item.chname }}</span>
             <span>￥{{ item.chprice.toFixed(1) }}</span>
             <span>{{ item.chnum }}</span>
@@ -84,7 +86,10 @@
           <div class="settlement1">
             <p>商品总计：&nbsp;&nbsp;&nbsp;&nbsp;￥{{ priceSum.toFixed(1) }}</p>
             <p>运费：+ ¥ 0.00</p>
-            <p>应付金额：<span>￥{{ priceSum.toFixed(1) }}</span></p>
+            <p>
+              应付金额：
+              <span>￥{{ priceSum.toFixed(1) }}</span>
+            </p>
           </div>
         </div>
         <!-- 地址栏信息 -->
@@ -158,129 +163,129 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-    .font{
-        >div:nth-child(3){
-            height: 160px;
-            border: 1px solid #dadada;
-            margin: 20px 30px 20px;
-            border-radius: 5px;
-            padding: 30px;
-            background-color: #f6f6f6;
-            >ul{
-                list-style: none;
-                overflow: hidden;
-                padding-bottom: 24px;
-                border-bottom: 1px solid #dadada;
-                >li:first-child{
-                    float: left;
-                }
-                >li:last-child{
-                    float:right;
-                }
-            }
-            >p{
-                clear: both;
-            }
-        }
-        >div:nth-child(4){
-            >div:first-child{
-                >span:first-child{
-                    margin-left: 30px;
-                }
-                >span:nth-child(2){
-                    margin-left: 520px;
-                }
-                >span:nth-child(3){
-                    margin-left: 100px;
-                }
-                >span:nth-child(4){
-                    margin-left: 100px;
-                }
-            }
-        }
+.font {
+  > div:nth-child(3) {
+    height: 160px;
+    border: 1px solid #dadada;
+    margin: 20px 30px 20px;
+    border-radius: 5px;
+    padding: 30px;
+    background-color: #f6f6f6;
+    > ul {
+      list-style: none;
+      overflow: hidden;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #dadada;
+      > li:first-child {
+        float: left;
+      }
+      > li:last-child {
+        float: right;
+      }
     }
-    .steps1{
-        margin-top: 35px;
-        width: 1200px;
-        margin-left: 70px;
+    > p {
+      clear: both;
     }
-    .steps2{
-        margin-top: 35px;
-        width: 1200px;
-        margin-left: 150px;
+  }
+  > div:nth-child(4) {
+    > div:first-child {
+      > span:first-child {
+        margin-left: 30px;
+      }
+      > span:nth-child(2) {
+        margin-left: 520px;
+      }
+      > span:nth-child(3) {
+        margin-left: 100px;
+      }
+      > span:nth-child(4) {
+        margin-left: 100px;
+      }
     }
-    .msg{
-        height: 110px;
-        line-height: 79px;
-        padding: 15px 30px;
-        border-bottom: 1px solid #efefef;
-        &:last-child{
-            border-bottom: 0;
-        }
-        >span{
-            display: inline-block;
-            text-align: center;
-        }
-        >span:first-child{
-            >img{
-                border: 1px solid #ebebeb;
-                width: 80px;
-            }
-        }
-        >span:nth-child(2){
-            width: 300px;
-            margin-left: 70px;
-            font-size: 14px;
-        }
-        >span:nth-child(3){
-            width: 80px;
-            margin-left: 88px;
-        }
-        >span:nth-child(4){
-            width: 50px;
-            margin-left: 61px;
-        }
-        >span:nth-child(5){
-            width: 100px;
-            margin-left: 50px;
-        }
+  }
+}
+.steps1 {
+  margin-top: 35px;
+  width: 1200px;
+  margin-left: 70px;
+}
+.steps2 {
+  margin-top: 35px;
+  width: 1200px;
+  margin-left: 150px;
+}
+.msg {
+  height: 110px;
+  line-height: 79px;
+  padding: 15px 30px;
+  border-bottom: 1px solid #efefef;
+  &:last-child {
+    border-bottom: 0;
+  }
+  > span {
+    display: inline-block;
+    text-align: center;
+  }
+  > span:first-child {
+    > img {
+      border: 1px solid #ebebeb;
+      width: 80px;
     }
-    .lineStyle{
-        height: 36px;
-        line-height: 36px;
-        background-color: #eee;
-        border-top: 1px solid #dbdbdb;
-        border-bottom: 1px solid #dbdbdb;
-        font-size: 12px;
-        color: #666;
+  }
+  > span:nth-child(2) {
+    width: 300px;
+    margin-left: 70px;
+    font-size: 14px;
+  }
+  > span:nth-child(3) {
+    width: 80px;
+    margin-left: 88px;
+  }
+  > span:nth-child(4) {
+    width: 50px;
+    margin-left: 61px;
+  }
+  > span:nth-child(5) {
+    width: 100px;
+    margin-left: 50px;
+  }
+}
+.lineStyle {
+  height: 36px;
+  line-height: 36px;
+  background-color: #eee;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  font-size: 12px;
+  color: #666;
+}
+.address {
+  > div:first-child {
+    > span {
+      margin-left: 30px;
     }
-    .address{
-        >div:first-child{
-            >span{
-                margin-left: 30px;
-            }
-        }
-        >div:nth-child(2){
-            height: 155px;
-            padding: 20px 30px;
-            font-size: 14px;
-        }
+  }
+  > div:nth-child(2) {
+    height: 155px;
+    padding: 20px 30px;
+    font-size: 14px;
+  }
+}
+.settlement1 {
+  padding-top: 10px;
+  padding-right: 30px;
+  > p {
+    text-align: right;
+    height: 20px;
+  }
+  > p:nth-child(2) {
+    font-size: 13px;
+  }
+  > p:last-child {
+    > span {
+      color: #d44d44;
+      font-weight: bold;
     }
-    .settlement1{
-        padding-top: 10px;
-        padding-right: 30px;
-        >p{
-            text-align: right;
-            height: 20px;
-        }
-        >p:nth-child(2){
-            font-size: 13px;
-        }
-        >p:last-child{
-            >span{
-                color: #d44d44;
-                font-weight: bold;
-            }
-        }
-    }
+  }
+}
 </style>

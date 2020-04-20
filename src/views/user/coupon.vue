@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .font{
-    font-size: 20px;
-    text-align: center;
-  }
+.font {
+  font-size: 20px;
+  text-align: center;
+}
 </style>

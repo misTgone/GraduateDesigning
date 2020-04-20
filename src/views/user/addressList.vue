@@ -100,7 +100,7 @@ export default {
         .then(_ => {
           done()
         })
-        .catch(_ => {})
+        .catch(_ => { })
     }
   },
   created () {
@@ -113,49 +113,49 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .title{
-    height: 38px;
-    background-color: #eee;
-    border-bottom: 1px solid #d4d4d4;
-    >span{
-      line-height: 38px;
-      font-size: 12px;
-      color: #838383;
-    }
-    >span:first-child{
-      margin-left: 38px;
-    }
-    >span:nth-child(2){
-      margin-left: 300px;
-    }
-    >span:nth-child(3){
-      margin-left: 300px;
-    }
-    >span:last-child{
-      margin-left: 110px;
-    }
+.title {
+  height: 38px;
+  background-color: #eee;
+  border-bottom: 1px solid #d4d4d4;
+  > span {
+    line-height: 38px;
+    font-size: 12px;
+    color: #838383;
   }
-  .address{
-    height: 100px;
-    line-height: 100px;
-    >span{
-      font-size: 16px;
-      display: inline-block;
-      text-align: center;
-    }
-    >span:first-child{
-      width: 94px;
-    }
-    >span:nth-child(2){
-      width: 400px;
-      margin-left: 90px;
-    }
-    >span:nth-child(3){
-      width: 276px;
-    }
-    >i{
-      font-size: 20px;
-      cursor: pointer;
-    }
+  > span:first-child {
+    margin-left: 38px;
   }
+  > span:nth-child(2) {
+    margin-left: 300px;
+  }
+  > span:nth-child(3) {
+    margin-left: 300px;
+  }
+  > span:last-child {
+    margin-left: 110px;
+  }
+}
+.address {
+  height: 100px;
+  line-height: 100px;
+  > span {
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+  }
+  > span:first-child {
+    width: 94px;
+  }
+  > span:nth-child(2) {
+    width: 400px;
+    margin-left: 90px;
+  }
+  > span:nth-child(3) {
+    width: 276px;
+  }
+  > i {
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
 </style>

@@ -7,7 +7,7 @@
         <div>
           <div>
             <img
-              src="http://q7jie7kms.bkt.clouddn.com/img/headPortrait/v2-8df0e1ada7af09d3c62f2ba5ec4e4266_hd.jpg"
+              src="http://qny.mistgone.top/img/headPortrait/v2-8df0e1ada7af09d3c62f2ba5ec4e4266_hd.jpg"
               alt=""
             >
             <h5>{{ userName }}</h5>

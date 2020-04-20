@@ -1,134 +1,245 @@
 <template>
-  <div id="total">
+  <div id="reg">
     <div>
-      <div class="title">
-        <div><i class="fas fa-cog fa-spin fa-4x bgcolor logo" /></div>
-        <h4>使用已注册帐号登录</h4>
-        <div>
-          <label>
+      <div>注册帐号</div>
+      <div>
+        <!-- <ul>
+          <li>
             <input
               type="text"
               class="form-control"
               placeholder="帐号"
               v-model="userName"
             >
-          </label>
-        </div>
-        <div>
-          <label>
+          </li>
+          <li>
             <input
               type="password"
               class="form-control"
               placeholder="密码"
               v-model="userPassword"
             >
-          </label>
-        </div>
-        <div>
-          <router-link to="/register">
-            注册帐号 |
-          </router-link>
-          <router-link to="">
-            忘记密码?
-          </router-link>
-        </div>
-        <div>
-          <button
-            class="btn btn-primary"
-            @click="toLogin"
+          </li>
+          <li>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="确认密码"
+              v-model="repetUpwd"
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="手机号"
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="邮箱"
+            >
+          </li>
+          <li>
+            // 验证码
+            <VerificationCode ref="VerificationCode" />
+          </li>
+          <li>
+            <button
+              class="btn btn-primary"
+              @click="toRegister"
+            >
+              注册
+            </button>
+          </li>
+        </ul> -->
+        <!-- 使用element-ui的表单控件迭代 -->
+        <el-form
+          :model="ruleForm"
+          :rules="rules"
+          ref="ruleForm"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item
+            label="活动名称"
+            prop="name"
           >
-            登录
-          </button>
-        </div>
+            <el-input v-model="ruleForm.name" />
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              @click="submitForm('ruleForm')"
+            >
+              立即创建
+            </el-button>
+            <el-button @click="resetForm('ruleForm')">
+              重置
+            </el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import VerificationCode from '../components/verificationCode.vue'
 export default {
+  components: {
+    // VerificationCode
+  },
   data () {
     return {
       userName: '',
-      userPassword: ''
+      userPassword: '',
+      repetUpwd: '',
+      ruleForm: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        region: [
+          { required: true, message: '请选择活动区域', trigger: 'change' }
+        ],
+        date1: [
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        ],
+        date2: [
+          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+        ],
+        type: [
+          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+        ],
+        resource: [
+          { required: true, message: '请选择活动资源', trigger: 'change' }
+        ],
+        desc: [
+          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        ]
+      }
     }
   },
   methods: {
-    toLogin () {
+    toRegister () {
       let u = this.userName
       let p = this.userPassword
-      // 检验是否输入为空
+      let rp = this.repetUpwd
+      // 验证环节
       if (!u) {
-        alert('请输入用户名!')
+        this.$message.error(
+          '账号不能为空!'
+        )
         return
       }
       if (!p) {
-        alert('请输入密码!')
+        this.$message.error(
+          '密码不能为空!'
+        )
         return
       }
-      // 发送axios post 请求
-      let postData = this.qs.stringify({
-        user: u,
-        upwd: p
-      })
-      let url = 'http://106.13.61.186:3000/login'
-      this.axios.post(url, postData).then(result => {
-        if (result.data.code === 1) {
-          alert('登录成功!')
-          this.userName = ''
-          this.userPassword = ''
-          // vuex并不能满足系统登录的需求
-          // console.log(result.data.uid)
-          // console.log(this.$store.state.userLogin)
-          // this.$store.state.userLogin = result.data.uid
-          // 使用sessionstorage解决
-          sessionStorage.setItem('userId', result.data.uid)
-          this.$router.push({ path: '/' })
+      if (!rp) {
+        this.$message.error(
+          '请再次确认密码!'
+        )
+        return
+      }
+      if (rp !== p) {
+        this.$message.error(
+          '前后密码不一致!'
+        )
+        return
+      }
+      let VCode = this.$refs.VerificationCode.check()
+      if (VCode === 1) {
+        // 发送ajax  post 请求
+        let postData = this.qs.stringify({
+          user: u,
+          upwd: p
+        })
+        let url = 'http://106.13.61.186:3000/register'
+        this.axios.post(url, postData).then(result => {
+          if (result.data.code === 1) {
+            alert('注册成功!')
+            this.userName = ''
+            this.userPassword = ''
+            this.repetUpwd = ''
+            this.$router.push({ path: '/login' })
+          } else {
+            alert('该用户名已注册!')
+          }
+        })
+      }
+    },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
         } else {
-          alert('账号或者密码有误!')
+          console.log('error submit!!')
+          return false
         }
       })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
     }
+
   }
 }
 </script>
 
 <style lang="scss">
-    #total {
+    #reg{
         min-width: 630px;
         min-height: 800px;
+        overflow: hidden;
         > div{
-            width: 452px;
-            height: 573px;
-            margin: 100px auto;
+            text-align: center;
+            margin: 0 auto;
+            width: 450px;
+            height: 580px;
+            margin-top: 100px;
             border-radius: 10px;
             box-shadow: 0 9px 30px -6px rgba(0,0,0,.2), 0 18px 20px -10px rgba(0,0,0,.04), 0 18px 20px -10px rgba(0,0,0,.04), 0 10px 20px -10px rgba(0,0,0,.04);
-        }
-        .title{
             > div{
-                text-align: center;
-                i{
-                    margin-top: 50px;
-                    color: rgb(4, 4, 4);
-                    background-color: rgba(255, 255, 255, 0);
-                }
-                > label{
-                    input{
+                > ul{
+                    list-style: none;
+                    margin-top: 40px;
+                    li{
+                        margin: 0 auto;
+                        margin-top: 18px;
                         width: 370px;
-                        height: 50px;
-                        margin-top: 10px;
+                        > input{
+                            height: 50px;
+                        }
+                        > button{
+                            height: 50px;
+                            width: 370px;
+                        }
                     }
                 }
-                > button{
-                    margin-top: 10px;
-                    width: 370px;
-                    height: 50px;
-                }
             }
-            h4{
-                margin-top: 50px;
-                text-align: center;
-                margin-bottom: 40px;
+            >div:nth-child(1){
+                font-size: 20px;
+                font-weight: 700;
+                color: #666;
+                height: 50px;
+                line-height: 50px;
+                border-bottom: 1px solid #dcdcdc;
             }
         }
     }

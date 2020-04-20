@@ -11,25 +11,25 @@
         >
           <swiper-slide>
             <img
-              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/ban6.png"
+              src="http://qny.mistgone.top/img/swiper/ban6.png"
               alt=""
             >
           </swiper-slide>
           <swiper-slide>
             <img
-              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/ban2.png"
+              src="http://qny.mistgone.top/img/swiper/ban2.png"
               alt=""
             >
           </swiper-slide>
           <swiper-slide>
             <img
-              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/ban5.jpg"
+              src="http://qny.mistgone.top/img/swiper/ban5.jpg"
               alt=""
             >
           </swiper-slide>
           <swiper-slide>
             <img
-              src="http://q7jie7kms.bkt.clouddn.com/img/swiper/banner4.png"
+              src="http://qny.mistgone.top/img/swiper/banner4.png"
               alt=""
             >
           </swiper-slide>
@@ -53,7 +53,7 @@
           <li>
             <router-link to="">
               <img
-                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four1.jpg"
+                src="http://qny.mistgone.top/img/fourLi/four1.jpg"
                 alt=""
               >
             </router-link>
@@ -61,7 +61,7 @@
           <li>
             <router-link to="">
               <img
-                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four2.jpg"
+                src="http://qny.mistgone.top/img/fourLi/four2.jpg"
                 alt=""
               >
             </router-link>
@@ -69,7 +69,7 @@
           <li>
             <router-link to="">
               <img
-                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four3.png"
+                src="http://qny.mistgone.top/img/fourLi/four3.png"
                 alt=""
               >
             </router-link>
@@ -77,7 +77,7 @@
           <li>
             <router-link to="">
               <img
-                src="http://q7jie7kms.bkt.clouddn.com/img/fourLi/four4.jpg"
+                src="http://qny.mistgone.top/img/fourLi/four4.jpg"
                 alt=""
               >
             </router-link>
@@ -91,7 +91,7 @@
           <div>
             <div>
               <img
-                src="http://q7jie7kms.bkt.clouddn.com/img/hot/hot2.webp"
+                src="http://qny.mistgone.top/img/hot/hot2.webp"
                 alt=""
                 class="hot1"
               >
@@ -102,7 +102,7 @@
           <div>
             <div>
               <img
-                src="http://q7jie7kms.bkt.clouddn.com/img/hot/hot1.jpg"
+                src="http://qny.mistgone.top/img/hot/hot1.jpg"
                 alt=""
               >
             </div>
@@ -116,10 +116,10 @@
       <!-- 6.four小图 -->
       <div id="miniFour">
         <ul>
-          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini1.jpg"></li>
-          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini2.jpg"></li>
-          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini3.jpg"></li>
-          <li><img src="http://q7jie7kms.bkt.clouddn.com/img/miniFour/mini4.jpg"></li>
+          <li><img src="http://qny.mistgone.top/img/miniFour/mini1.jpg"></li>
+          <li><img src="http://qny.mistgone.top/img/miniFour/mini2.jpg"></li>
+          <li><img src="http://qny.mistgone.top/img/miniFour/mini3.jpg"></li>
+          <li><img src="http://qny.mistgone.top/img/miniFour/mini4.jpg"></li>
         </ul>
       </div>
     </div>

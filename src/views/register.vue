@@ -29,6 +29,20 @@
             >
           </li>
           <li>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="手机号"
+            >
+          </li>
+          <li>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="邮箱"
+            >
+          </li>
+          <li>
             <!-- 验证码 -->
             <VerificationCode ref="VerificationCode" />
           </li>
@@ -124,7 +138,7 @@ export default {
             text-align: center;
             margin: 0 auto;
             width: 450px;
-            height: 460px;
+            height: 580px;
             margin-top: 100px;
             border-radius: 10px;
             box-shadow: 0 9px 30px -6px rgba(0,0,0,.2), 0 18px 20px -10px rgba(0,0,0,.04), 0 18px 20px -10px rgba(0,0,0,.04), 0 10px 20px -10px rgba(0,0,0,.04);
