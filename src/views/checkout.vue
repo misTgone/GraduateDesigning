@@ -212,7 +212,7 @@ export default {
     },
     // 向订单表user_checkout添加记录
     placeOrder () {
-      let checkoutId = this.toCheckoutId()
+      let checkoutId = this.getNowTime()
       let price = []
       let num = []
       let name = []
@@ -257,34 +257,34 @@ export default {
         }
       })
     },
-    // DATE()日期格式化，返回订单码
-    toCheckoutId () {
-      let t = new Date()
-      let y = t.getFullYear()
-      let M = t.getMonth() + 1
-      let d = t.getDate()
-      let h = t.getHours()
-      let m = t.getMinutes()
-      let s = t.getSeconds()
-      let arr = []
-      if (M < 10) {
-        M = '0' + M
-      }
-      if (h < 10) {
-        h = '0' + h
-      }
-      if (m < 10) {
-        m = '0' + m
-      }
-      if (s < 10) {
-        s = '0' + s
-      }
-      let order = '' + y + M + d + h + m + s + sessionStorage.getItem('userId')
-      let time = '' + y + '-' + M + '-' + d + ' ' + h + ':' + m + ':' + s
-      arr.push(order)
-      arr.push(time)
-      return arr
-    },
+    // DATE()日期格式化，返回订单码，已加入全局函数(main.js)
+    // toCheckoutId () {
+    //   let t = new Date()
+    //   let y = t.getFullYear()
+    //   let M = t.getMonth() + 1
+    //   let d = t.getDate()
+    //   let h = t.getHours()
+    //   let m = t.getMinutes()
+    //   let s = t.getSeconds()
+    //   let arr = []
+    //   if (M < 10) {
+    //     M = '0' + M
+    //   }
+    //   if (h < 10) {
+    //     h = '0' + h
+    //   }
+    //   if (m < 10) {
+    //     m = '0' + m
+    //   }
+    //   if (s < 10) {
+    //     s = '0' + s
+    //   }
+    //   let order = '' + y + M + d + h + m + s + sessionStorage.getItem('userId')
+    //   let time = '' + y + '-' + M + '-' + d + ' ' + h + ':' + m + ':' + s
+    //   arr.push(order)
+    //   arr.push(time)
+    //   return arr
+    // },
     // 添加订单对应地址信息到表checkout_address
     addCheckoutAddress (checkoutId) {
       let url = `http://106.13.61.186:3000/addCheckoutAddress`

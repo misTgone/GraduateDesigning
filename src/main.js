@@ -36,3 +36,32 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+// 全局函数:获取时间
+Vue.prototype.getNowTime = function () {
+  let t = new Date()
+  let y = t.getFullYear()
+  let M = t.getMonth() + 1
+  let d = t.getDate()
+  let h = t.getHours()
+  let m = t.getMinutes()
+  let s = t.getSeconds()
+  let arr = []
+  if (M < 10) {
+    M = '0' + M
+  }
+  if (h < 10) {
+    h = '0' + h
+  }
+  if (m < 10) {
+    m = '0' + m
+  }
+  if (s < 10) {
+    s = '0' + s
+  }
+  let order = '' + y + M + d + h + m + s + sessionStorage.getItem('userId')
+  let time = '' + y + '-' + M + '-' + d + ' ' + h + ':' + m + ':' + s
+  arr.push(order)
+  arr.push(time)
+  return arr
+}
