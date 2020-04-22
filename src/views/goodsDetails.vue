@@ -146,16 +146,21 @@ export default {
     },
     // 单品信息写入vuex，并跳转到checkout结算页面
     buyNow () {
-      let product = []
-      let p = {}
-      p.goodsid = this.goodsid
-      p.gprice = this.goodsData.gprice
-      p.gname = this.goodsData.gname
-      p.num = this.num
-      p.url = this.picUrl
-      product.push(p)
-      this.$store.state.checkoutSingle = product
-      this.$router.push('/checkout')
+      let userId = sessionStorage.getItem('userId')
+      if (!userId) {
+        this.$router.push('/login')
+      } else {
+        let product = []
+        let p = {}
+        p.goodsid = this.goodsid
+        p.gprice = this.goodsData.gprice
+        p.gname = this.goodsData.gname
+        p.num = this.num
+        p.url = this.picUrl
+        product.push(p)
+        this.$store.state.checkoutSingle = product
+        this.$router.push('/checkout')
+      }
     }
   }
 }

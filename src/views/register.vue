@@ -139,7 +139,7 @@ export default {
           let VCode = this.$refs.VerificationCode.check()
           if (VCode === 1) {
             this.time = this.getNowTime()[1]
-            let url = `http://127.0.0.1:3000/register`
+            let url = `http://106.13.61.186:3000/register`
             let postData = this.qs.stringify({
               user: this.ruleForm.name,
               upwd: this.ruleForm.pass,
@@ -153,6 +153,7 @@ export default {
                   message: '注册成功!',
                   type: 'success'
                 })
+                this.$router.push('/login')
               }
             })
           }

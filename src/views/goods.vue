@@ -155,20 +155,25 @@ export default {
     },
     // 添加一件对应商品到user_cart表
     addOneToCart (id) {
-      let url = `http://106.13.61.186:3000/addCart`
-      let postData = this.qs.stringify({
-        gid: id,
-        cid: sessionStorage.getItem('userId'),
-        num: 1
-      })
-      this.axios.post(url, postData).then(result => {
-        if (result.data.code === 1) {
-          this.$message({
-            message: '添加购物车成功!',
-            type: 'success'
-          })
-        }
-      })
+      let userId = sessionStorage.getItem('userId')
+      if (!userId) {
+        this.$router.push('/login')
+      } else {
+        let url = `http://106.13.61.186:3000/addCart`
+        let postData = this.qs.stringify({
+          gid: id,
+          cid: sessionStorage.getItem('userId'),
+          num: 1
+        })
+        this.axios.post(url, postData).then(result => {
+          if (result.data.code === 1) {
+            this.$message({
+              message: '添加购物车成功!',
+              type: 'success'
+            })
+          }
+        })
+      }
     },
     // 综合排序
     multipleRank () {
