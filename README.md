@@ -12,8 +12,8 @@
 ## 首屏优化
 问题主要出在npm run build生成的chunk-ventors.js过大
 
-1. compression-webpack-plugin插件，重新build之后发现仍然有900多kb
-2. index.html修改js的href为cdn（推荐七牛云）引入js
+1. compression-webpack-plugin插件，重新build之后发现chunk-ventors.js仍然有900多kb
+2. index.html修改chunk-ventors.js的href为cdn（推荐七牛云）引入js
 
 结果：首屏加载速度从10s缩短为1s
 
