@@ -1,7 +1,10 @@
 <template>
   <div>
     <User user-title="我的订单">
-      <div class="big">
+      <div
+        class="big"
+        v-show="haveOrder"
+      >
         <div
           v-for="(item,index) of orderMessage"
           :key="index"
@@ -50,6 +53,12 @@
           </div>
         </div>
       </div>
+      <div
+        class="noneOrder"
+        v-show="!haveOrder"
+      >
+        无订单可显示~
+      </div>
     </User>
   </div>
 </template>
@@ -63,7 +72,8 @@ export default {
   data () {
     return {
       orderMessage: [],
-      allSum: []
+      allSum: [],
+      haveOrder: true
     }
   },
   methods: {
@@ -108,7 +118,7 @@ export default {
     let url = `http://106.13.61.186:3000/getCheckout/${sessionStorage.getItem('userId')}`
     this.axios.get(url).then(result => {
       // 查询是否有订单
-      if (result.data.result.length) {
+      if (result.data.code === 1) {
         // 把相同单号的数据归类到同一个数组，再加入到一个总数组
         let arr1 = []
         for (let i = 0; i < result.data.result.length; i++) {
@@ -128,6 +138,8 @@ export default {
           this.allSum.push(it)
           this.orderMessage.push(m)
         }
+      } else {
+        this.haveOrder = false
       }
     })
   }
@@ -228,5 +240,9 @@ export default {
     >span:last-child{
       margin-left: 22px;
     }
+  }
+  .noneOrder{
+    text-align: center;
+    font-size: 24px;
   }
 </style>
