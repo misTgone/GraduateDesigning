@@ -94,7 +94,7 @@ export default {
         this.againPassword = ''
         return
       }
-      let url = `http://127.0.0.1:3000/changePassword`
+      let url = `http://106.13.61.186:3000/changePassword`
       let postData = this.qs.stringify({
         uid: sessionStorage.getItem('userId'),
         upwd: this.oldPassword,
