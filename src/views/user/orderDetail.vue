@@ -125,6 +125,7 @@ export default {
     }
   },
   methods: {
+    // 取消订单
     cancelOrder () {
       let url = `http://106.13.61.186:3000/cancelOrder/${this.orderMsg[0].checkoutId}`
       this.axios.get(url).then(result => {
