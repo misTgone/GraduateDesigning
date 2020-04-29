@@ -35,12 +35,16 @@
         >捐赠</a>
         <span
           @click="toLogin"
+          @mouseover="userWrapper"
+          @mouseleave="userAWrapper"
         >
           <i
             class="fas fa-user fa-lg bgcolor rcolor"
-            @mouseover="userWrapper"
-            @mouseleave="userAWrapper"
           />
+          <span
+            v-show="1"
+            class="loginOrUser"
+          >{{ loginText }}</span>
         </span>
         <!-- 用户内容提示框 -->
         <div
@@ -99,6 +103,7 @@
           @click="toCart"
         >
           <i class="fas fa-shopping-cart fa-lg bgcolor rcolor" />
+          <span class="cartStyle">购物车</span>
         </span>
       </div>
     </header>
@@ -115,7 +120,7 @@
           </li>
           <li>
             <router-link to="/goods">
-              · 全部
+              · 全部商品
             </router-link>
           </li>
           <li>
@@ -153,7 +158,8 @@ export default {
       goods: [],
       state: '',
       timeout: null,
-      goodsid: ''
+      goodsid: '',
+      loginText: '登录帐号'
     }
   },
   props: {
@@ -179,6 +185,7 @@ export default {
     },
     userExit () {
       sessionStorage.removeItem('userId')
+      this.loginText = '登录帐号'
       let path = this.$route.path
       if (path === '/') {
         location.reload()
@@ -200,6 +207,7 @@ export default {
         this.$router.push('/cart')
       }
     },
+    // 搜索栏
     toSearch () {
       if (!this.state) {
         this.$notify({
@@ -228,8 +236,12 @@ export default {
       }
     },
     handleSelect (item) {
-      // console.log(item)
       this.goodsid = item.goodsid
+    }
+  },
+  created () {
+    if (this.userName) {
+      this.loginText = '个人中心'
     }
   },
   mounted () {
@@ -297,15 +309,15 @@ export default {
   }
   .nav-user-wrapper{
     position: absolute;
-    top: 75px;
-    right: 12px;
+    top: 100px;
+    right: 10px;
     width: 168px;
     height: 376px;
     background-color: white;
     border-radius: 10px;
     z-index: 30;
-    box-shadow: 0 0 20px 10px rgba(0,0,0,.04);
     display: none;
+    box-shadow: 0 0 20px 10px rgba(0,0,0,.04);
     border-top: 30px;
     >div:first-child{
       height: 20px;
@@ -386,5 +398,19 @@ export default {
         }
       }
     }
+  }
+  .loginOrUser{
+    position: absolute;
+    top: 30px;
+    right: 66px;
+    color: #c8c8c8;
+    font-size: 13px;
+  }
+  .cartStyle{
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    font-size: 13px;
+    color: #c8c8c8;
   }
 </style>
