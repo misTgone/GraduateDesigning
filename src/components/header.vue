@@ -240,7 +240,7 @@ export default {
     }
   },
   created () {
-    if (this.userName) {
+    if (sessionStorage.getItem('userId')) {
       this.loginText = '个人中心'
     }
   },
